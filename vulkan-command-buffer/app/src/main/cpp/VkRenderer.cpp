@@ -296,6 +296,11 @@ VkRenderer::VkRenderer(ANativeWindow *window) {
     };
 
     VK_CHECK_ERROR(vkAllocateCommandBuffers(mDevice, &commandBufferAllocateInfo, &mCommandBuffer));
+
+    // ================================================================================
+    // 6. VkCommandBuffer 재설정
+    // ================================================================================
+    VK_CHECK_ERROR(vkResetCommandBuffer(mCommandBuffer, 0));
 }
 
 VkRenderer::~VkRenderer() {
