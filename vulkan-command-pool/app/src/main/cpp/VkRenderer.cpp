@@ -199,7 +199,7 @@ VkRenderer::VkRenderer(ANativeWindow *window) {
 
     VkCompositeAlphaFlagBitsKHR compositeAlpha = VK_COMPOSITE_ALPHA_FLAG_BITS_MAX_ENUM_KHR;
     for (auto i = 0; i <= 4; ++i) {
-        if (auto flag = 0x1u << i; surfaceCapabilities.supportedUsageFlags & flag) {
+        if (auto flag = 0x1u << i; surfaceCapabilities.supportedCompositeAlpha & flag) {
             compositeAlpha = static_cast<VkCompositeAlphaFlagBitsKHR>(flag);
             break;
         }
