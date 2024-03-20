@@ -206,6 +206,10 @@ VkRenderer::VkRenderer(ANativeWindow *window) {
     }
     assert(compositeAlpha != VK_COMPOSITE_ALPHA_FLAG_BITS_MAX_ENUM_KHR);
 
+    VkImageUsageFlags imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT |
+                                   VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+    assert(surfaceCapabilities.supportedUsageFlags & imageUsage);
+
     uint32_t surfaceFormatCount = 0;
     VK_CHECK_ERROR(vkGetPhysicalDeviceSurfaceFormatsKHR(mPhysicalDevice,
                                                         mSurface,
@@ -256,7 +260,7 @@ VkRenderer::VkRenderer(ANativeWindow *window) {
         .imageColorSpace = surfaceFormats[surfaceFormatIndex].colorSpace,
         .imageExtent = surfaceCapabilities.currentExtent,
         .imageArrayLayers = 1,
-        .imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT,
+        .imageUsage = imageUsage,
         .imageSharingMode = VK_SHARING_MODE_EXCLUSIVE,
         .preTransform = surfaceCapabilities.currentTransform,
         .compositeAlpha = compositeAlpha,
